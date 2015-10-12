@@ -1,0 +1,26 @@
+use ast::Term;
+use std::str::FromStr;
+
+grammar;
+
+pub Term: Box<Term> = {
+    "true" => Box::new(Term::True),
+    "false" => Box::new(Term::False),
+    "if" <cond:Term> "then" <the:Term> "else" <els:Term> => Box::new(Term::If(cond, the, els)),
+    <Nat>,
+    "succ" <t:Term> => Box::new(Term::Succ(t)),
+    "pred" <t:Term> => Box::new(Term::Pred(t)),
+    "iszero" <t:Term> => Box::new(Term::IsZero(t)),
+    "(" <Term> ")",
+};
+
+Nat: Box<Term> =
+    r"[0-9]+" => {
+        let mut v = Box::new(Term::Zero);
+        let mut n = u64::from_str(<>).unwrap();
+        while n > 0 {
+            v = Box::new(Term::Succ(v));
+            n = n - 1;
+        }
+        v
+    };
