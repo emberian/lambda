@@ -1,3 +1,4 @@
+use std::fmt;
 use ast::Term;
 use ast::Term::*;
 use self::Error::*;
@@ -7,6 +8,12 @@ pub enum Error {
     IsZeroOfBool,
     SuccOrPredOfNonNat,
     IfNonBool,
+}
+
+impl fmt::Display for Error {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "{:?}", self)
+    }
 }
 
 fn isnumeric(v: &Term) -> bool {
