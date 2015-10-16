@@ -45,7 +45,7 @@ pub fn small_eval(v: &Term) -> Term {
             Succ(ref s) if isnumeric(s) => False,
             _ => IsZero(Box::new(small_eval(s))),
         },
-        _ => panic!("No rule applies")
+        _ => v.clone()
     }
 }
 
