@@ -9,6 +9,7 @@ fn main() {
     let mut stdout = std::io::stdout();
     let mut s = String::new();
     loop {
+        s.clear();
         stdout.write("λ ".as_bytes()).unwrap();
         stdout.flush().unwrap();
         stdin.read_line(&mut s).unwrap();
@@ -19,6 +20,5 @@ fn main() {
         println!("big_eval = {}, small_eval = {}",
                  match eval::big_eval(&*t) { Ok(o) => format!("{}", o), Err(e) => format!("{}", e) },
                  eval::small_eval(&*t));
-        s.clear();
     }
 }
